@@ -49,8 +49,8 @@
          
             <!-- Menu Footer -->
             <li class="user-footer">
-              <a href="login_form.php" class="btn btn-default btn-flat">Login</a>
-              <a href="signout.php" class="btn btn-default btn-flat float-end">Sign out</a>
+              <a href="#" class="btn btn-default btn-flat">Profile</a>
+              <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
             </li>
             <!-- End Menu Footer -->
           </ul>
@@ -197,12 +197,13 @@
                 </li>
                 <li class="nav-item">
                   <a href="display_leave_type.php" class="nav-link">
-                  <i class="fas fa-circle nav-icon text-primary"></i>
+                    <!-- <i class="far fa-circle nav-icon"></i> -->
+                    <i class="fas fa-circle nav-icon text-primary"></i>
                     <p>Manage Leave Type</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="leave_request_form.php" class="nav-link">
+                  <a href="leave_request_form_admin.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add Leave</p>
                   </a>
@@ -256,58 +257,6 @@
             </a>
             </li>
 
-            <li class="nav-item">
-            <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-copy"></i>
-            <p>
-            Layout Options
-            <i class="fas fa-angle-left right"></i>
-            <span class="badge badge-info right">6</span>
-            </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-            <li class="nav-item">
-            <a href="layout/top-nav.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Top Navigation</p>
-            </a>
-            </li>
-            
-            <li class="nav-item">
-            <a href="layout/boxed.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Boxed</p>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="layout/fixed-sidebar.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Sidebar</p>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="layout/fixed-topnav.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Navbar</p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="layout/fixed-footer.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Footer</p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="layout/collapsed-sidebar.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Collapsed Sidebar</p>
-            </a>
-            </li>
-            </ul>
-            </li>
-
             <!-- Add more sidebar menu items here -->
           </ul>
         </nav>
@@ -325,7 +274,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Dashboard</h1>
+                <h1 class="m-0">Leave</h1>
               </div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -337,59 +286,55 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
-                <p>New Orders</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+        <?php
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Retrieve form data
+        $lt_name = $_POST["lt_name"];
+        $description = $_POST["description"];
 
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-                <p>Bounce Rate</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+        // Validate form data (add your own validation as needed)
 
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+        // Connect to the database
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "employee_leave_management";
 
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
-                <p>Unique Visitors</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Insert leave type into the database
+        $sql = "INSERT INTO leave_types (lt_name, description) VALUES ('$lt_name', '$description')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Leave type added successfully.";
+        } else {
+            echo "Error adding leave type: " . $conn->error;
+        }
+
+        $conn->close();
+    }
+    ?>
+
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <div class="mb-3">
+        <label for="lt_name" class="form-label">Name:</label>
+        <input type="text" name="lt_name" id="lt_name" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
 
         <!-- Add your page content here -->
       </section>

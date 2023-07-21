@@ -11,6 +11,9 @@
   <!-- AdminLTE CSS -->
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css">
 </head>
+
+<?php  session_start(); ?>
+
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
     <!-- Navbar -->
@@ -33,7 +36,7 @@
           <!-- User Menu Toggle -->
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="image/user2-160x160.jpg" class="user-image rounded-circle shadow" alt="User Image">
-            <span class="d-none d-md-inline">Phouvieng KPL</span>
+            <span class="d-none d-md-inline"></span> <?php echo $_SESSION['username']; ?></span>
           </a>
           <!-- User Menu Dropdown -->
           <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
@@ -49,7 +52,7 @@
          
             <!-- Menu Footer -->
             <li class="user-footer">
-              <a href="login_form.php" class="btn btn-default btn-flat">Login</a>
+              <a href="#" class="btn btn-default btn-flat">Profile</a>
               <a href="signout.php" class="btn btn-default btn-flat float-end">Sign out</a>
             </li>
             <!-- End Menu Footer -->
@@ -104,74 +107,19 @@
               </p>
               </a>
               </li>
-
-
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-globe"></i> -->
-                  <!-- <i class="nav-icon fas fa-office"></i> -->
-                  <!-- <i class="nav-icon fas fa-school"></i> -->
-                  <!-- <i class="nav-icon fas fa-music"></i> -->
-                  <!-- <i class="nav-icon fas fa-heart"></i> -->
-                  <!-- <i class="nav-icon fas fa-camera"></i> -->
-                  <!-- <i class="nav-icon fas fa-star"></i> -->
-                  <!-- <i class="nav-icon fas fa-search"></i> -->
-                  <i class="nav-icon fas fa-house"></i>
-
-
-                <p>
-                  Department
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <!-- Submenu -->
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="department_insert_form.php" class="nav-link">
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <i class="far fa-heart nav-icon"></i>
-                    <p>Add Department</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_department.php" class="nav-link">
-                    <i class="fas fa-circle nav-icon"></i>
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <p>Manage Department</p>
-                  </a>
-                </li>
-              </ul>
-              <!-- End Submenu -->
-            </li>
-
+               
             <!-- Dashboard Link -->
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <!-- <i class="nav-icon fas fa-tachometer-alt"></i> -->
                 <i class="nav-icon fas fa-user"></i>
                  <p>
-                  Employee
-                  <i class="right fas fa-angle-left"></i>  
+                  My Profile
+                  <!-- <i class="right fas fa-angle-left"></i>   -->
                 </p>
               </a>
               <!-- Submenu -->
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="employee_insert_form.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Add Employee</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_employee.php" class="nav-link">
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <i class="fas fa-circle nav-icon"></i>
-
-                    <p>Manage Employee</p>
-                  </a>
-                </li>
-                
-              </ul>
+            
               <!-- End Submenu -->
             </li>
 
@@ -189,123 +137,24 @@
               </a>
               <!-- Submenu -->
               <ul class="nav nav-treeview">
+             
                 <li class="nav-item">
-                  <a href="leave_type_form.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Leave Type</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_leave_type.php" class="nav-link">
-                  <i class="fas fa-circle nav-icon text-primary"></i>
-                    <p>Manage Leave Type</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="leave_request_form.php" class="nav-link">
+                  <a href="leave_request_form_user.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add Leave</p>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="leave_request_approvals.php" class="nav-link">
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <i class="fas fa-circle nav-icon text-primary"></i>
-                    <p>Manage Leave</p>
-                  </a>
+             
                 </li>
                 <li class="nav-item">
-                  <a href="display_leave_request_pending.php" class="nav-link">
-                    <i class="far fa-circle nav-icon text-warning"></i>
-                    <p>Pending</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_leave_request_approve.php" class="nav-link">
-                    <i class="far fa-circle nav-icon text-info"></i>
-                    <p>Approve</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_leave_request_reject.php" class="nav-link">
-                    <i class="far fa-circle nav-icon text-danger"></i>
-                    <!-- <i class="nav-icon bi bi-circle text-warning"></i> -->
-                    <p>Reject</p>
-                  </a>
-
-                </li>
-                <li class="nav-item">
-                  <a href="display_leave_request.php" class="nav-link">
+                  <a href="display_leave_request_user.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>History</p>
+                    <p>Leave History</p>
                   </a>
                 </li>
                 
               </ul>
               <!-- End Submenu -->
-            </li>
-
-            <li class="nav-item">
-            <a href="widgets.html" class="nav-link">
-            <!-- <i class="nav-icon fas fa-th"></i> -->
-            <i class="nav-icon fas fa-door-open"></i>
-            <p>
-            Manage Admin
-            <!-- <span class="right badge badge-danger">New</span> -->
-            </p>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-copy"></i>
-            <p>
-            Layout Options
-            <i class="fas fa-angle-left right"></i>
-            <span class="badge badge-info right">6</span>
-            </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-            <li class="nav-item">
-            <a href="layout/top-nav.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Top Navigation</p>
-            </a>
-            </li>
-            
-            <li class="nav-item">
-            <a href="layout/boxed.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Boxed</p>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="layout/fixed-sidebar.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Sidebar</p>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="layout/fixed-topnav.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Navbar</p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="layout/fixed-footer.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Footer</p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="layout/collapsed-sidebar.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Collapsed Sidebar</p>
-            </a>
-            </li>
-            </ul>
             </li>
 
             <!-- Add more sidebar menu items here -->

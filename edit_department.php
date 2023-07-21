@@ -336,60 +336,58 @@
             </div>
           </div>
         </div>
+        <?php
+    // Check if the department ID is provided
+    if (!isset($_GET['id'])) {
+        echo "Department ID not provided.";
+        exit();
+    }
 
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
-                <p>New Orders</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+    $departmentId = $_GET['id'];
 
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-                <p>Bounce Rate</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+    // Connect to the database
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "employee_leave_management";
 
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
-                <p>Unique Visitors</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Fetch department details from the database
+    $sql = "SELECT * FROM department WHERE id = $departmentId";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+      $department = $result->fetch_assoc();
+  
+      // Display the department form with pre-filled values
+      echo "<form method='post' action='update_department.php'>";
+      echo "<input type='hidden' name='id' value='" . $department['id'] . "'>";
+      echo "<div class='mb-3'>";
+      echo "<label for='name' class='form-label'>Name:</label>";
+      echo "<input type='text' name='d_name' id='d_name' class='form-control' value='" . $department['d_name'] . "' required>";
+      echo "</div>";
+      echo "<div class='mb-3'>";
+      echo "<label for='short_name' class='form-label'>Short Name:</label>";
+      echo "<input type='text' name='short_name' id='short_name' class='form-control' value='" . $department['short_name'] . "' required>";
+      echo "</div>";
+      echo "<div class='mb-3'>";
+      echo "<label for='code' class='form-label'>Code:</label>";
+      echo "<input type='text' name='code' id='code' class='form-control' value='" . $department['code'] . "' required>";
+      echo "</div>";
+      echo "<button type='submit' class='btn btn-primary'>Submit</button>";
+      echo "</form>";
+  } else {
+      echo "Department not found.";
+  }
+  
+  $conn->close();
+  ?>
 
         <!-- Add your page content here -->
       </section>

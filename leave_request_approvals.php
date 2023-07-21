@@ -49,8 +49,8 @@
          
             <!-- Menu Footer -->
             <li class="user-footer">
-              <a href="login_form.php" class="btn btn-default btn-flat">Login</a>
-              <a href="signout.php" class="btn btn-default btn-flat float-end">Sign out</a>
+              <a href="#" class="btn btn-default btn-flat">Profile</a>
+              <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
             </li>
             <!-- End Menu Footer -->
           </ul>
@@ -197,7 +197,8 @@
                 </li>
                 <li class="nav-item">
                   <a href="display_leave_type.php" class="nav-link">
-                  <i class="fas fa-circle nav-icon text-primary"></i>
+                    <!-- <i class="far fa-circle nav-icon"></i> -->
+                    <i class="fas fa-circle nav-icon text-primary"></i>
                     <p>Manage Leave Type</p>
                   </a>
                 </li>
@@ -256,58 +257,6 @@
             </a>
             </li>
 
-            <li class="nav-item">
-            <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-copy"></i>
-            <p>
-            Layout Options
-            <i class="fas fa-angle-left right"></i>
-            <span class="badge badge-info right">6</span>
-            </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-            <li class="nav-item">
-            <a href="layout/top-nav.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Top Navigation</p>
-            </a>
-            </li>
-            
-            <li class="nav-item">
-            <a href="layout/boxed.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Boxed</p>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="layout/fixed-sidebar.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Sidebar</p>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="layout/fixed-topnav.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Navbar</p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="layout/fixed-footer.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Footer</p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="layout/collapsed-sidebar.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Collapsed Sidebar</p>
-            </a>
-            </li>
-            </ul>
-            </li>
-
             <!-- Add more sidebar menu items here -->
           </ul>
         </nav>
@@ -325,7 +274,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Dashboard</h1>
+                <h1 class="m-0">Leave</h1>
               </div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -337,59 +286,81 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
-                <p>New Orders</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+        <?php
+    // Connect to the database
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "employee_leave_management";
 
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-                <p>Bounce Rate</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
-                <p>Unique Visitors</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
+    // Retrieve pending leave requests
+    // $sql = "SELECT lr.id, lr.employee_id, lr.start_date, lr.end_date, e.name, lr.reason, lr.created_at
+    //         FROM leave_requests lr
+    //         INNER JOIN employees e ON lr.employee_id = e.id
+    //         WHERE lr.status = 'pending'";
+
+    $sql = "SELECT lr.id, lr.employee_id, lr.start_date, lr.end_date, e.name, lr.reason, lr.created_at, lr.status, d.d_name, lt.lt_name
+            FROM leave_requests lr
+            INNER JOIN employees e ON lr.employee_id = e.id
+            INNER JOIN department d ON e.department_id = d.id
+            INNER JOIN leave_types lt ON lr.leave_type_id = lt.id
+            WHERE lr.status = 'pending'";
+
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+      echo "<table class='table table-striped'>";
+      echo "<thead>";
+      echo "<tr>";
+      // echo "<th>ID</th><th>Employee ID</th>";
+      echo "<th>Employee Name</th>";
+      echo "<th>Department</th>";
+      echo "<th>Reason</th>";
+      // echo "<th>Start Date</th><th>End Date</th>";
+      echo "<th>Leave Type</th>";
+      echo "<th>Applied On</th>";
+      echo "<th>Status</th>";
+      echo "<th>Action</th>";
+      echo "</tr>";
+      echo "</thead>";
+  
+      echo "<tbody>";
+      while ($row = $result->fetch_assoc()) {
+          echo "<tr>";
+          // echo "<td>" . $row["id"] . "</td>";
+          // echo "<td>" . $row["employee_id"] . "</td>";
+          echo "<td>" . $row["name"] . "</td>";
+          echo "<td>" . $row["d_name"] . "</td>";
+          echo "<td>" . $row["reason"] . "</td>";
+          // echo "<td>" . $row["start_date"] . "</td>";
+          // echo "<td>" . $row["end_date"] . "</td>";
+          echo "<td>" . $row["lt_name"] . "</td>";
+          echo "<td>" . $row["created_at"] . "</td>";
+          echo "<td>" . $row["status"] . "</td>";
+          echo "<td>";
+          // echo "<a href='approve_request.php?id=" . $row["id"] . "&action=approve' class='btn btn-success btn-sm'>Approve</a> | ";
+          // echo "<a href='approve_request.php?id=" . $row["id"] . "&action=reject' class='btn btn-danger btn-sm'>Reject</a>";
+          echo "<a href='approve_request.php?id=" . $row["id"] . "&action=view' class='btn btn-primary btn-sm'>View Detail</a>";
+          echo "</td>";
+          echo "</tr>";
+      }
+      echo "</tbody>";
+  
+      echo "</table>";
+  } else {
+      echo "No pending leave requests.";
+  }
+
+    $conn->close();
+    ?>
 
         <!-- Add your page content here -->
       </section>

@@ -49,7 +49,7 @@
          
             <!-- Menu Footer -->
             <li class="user-footer">
-              <a href="login_form.php" class="btn btn-default btn-flat">Login</a>
+              <a href="#" class="btn btn-default btn-flat">Profile</a>
               <a href="signout.php" class="btn btn-default btn-flat float-end">Sign out</a>
             </li>
             <!-- End Menu Footer -->
@@ -202,7 +202,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="leave_request_form.php" class="nav-link">
+                  <a href="leave_request_form_admin.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add Leave</p>
                   </a>
@@ -254,58 +254,6 @@
             <!-- <span class="right badge badge-danger">New</span> -->
             </p>
             </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-copy"></i>
-            <p>
-            Layout Options
-            <i class="fas fa-angle-left right"></i>
-            <span class="badge badge-info right">6</span>
-            </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-            <li class="nav-item">
-            <a href="layout/top-nav.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Top Navigation</p>
-            </a>
-            </li>
-            
-            <li class="nav-item">
-            <a href="layout/boxed.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Boxed</p>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="layout/fixed-sidebar.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Sidebar</p>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="layout/fixed-topnav.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Navbar</p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="layout/fixed-footer.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Footer</p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="layout/collapsed-sidebar.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Collapsed Sidebar</p>
-            </a>
-            </li>
-            </ul>
             </li>
 
             <!-- Add more sidebar menu items here -->
