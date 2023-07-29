@@ -152,6 +152,19 @@ session_start();
                     <p>Leave History</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="holiday_form.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add Holiday</p>
+                  </a>
+                </li>
+                
+                <li class="nav-item">
+                  <a href="display_holiday.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage Holiday</p>
+                  </a>
+                </li>
                 
               </ul>
               <!-- End Submenu -->
@@ -215,11 +228,12 @@ if ($result->num_rows > 0) {
     $employee_id = $row['id'];
 
     // Insert the leave request
-    $stmt = $conn->prepare("INSERT INTO leave_requests (employee_id, start_date, end_date, created_at, status, reason, leave_type_id)
-                            VALUES (?, ?, ?, NOW(), ?, ?, ?)");
-    $stmt->bind_param("ssssss", $employee_id, $start_date, $end_date, $status, $reason, $leaveType);
+    $stmt = $conn->prepare("INSERT INTO leave_requests (employee_id, leave_duration, start_date, end_date, created_at, status, reason, leave_type_id)
+                            VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)");
+    $stmt->bind_param("sssssss", $employee_id, $leave_duration, $start_date, $end_date, $status, $reason, $leaveType);
 
     // Set the values for the leave request
+    $leave_duration = $_POST['leave_duration'];
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
     $status = "Pending";
@@ -228,7 +242,7 @@ if ($result->num_rows > 0) {
 
     // Execute the statement
     if ($stmt->execute()) {
-        // echo "Leave request submitted successfully.";
+        echo "Leave request submitted successfully.";
         
     } else {
         echo "Error: " . $stmt->error;

@@ -49,7 +49,7 @@
          
             <!-- Menu Footer -->
             <li class="user-footer">
-              <a href="login_form.php" class="btn btn-default btn-flat">Login</a>
+              <a href="#" class="btn btn-default btn-flat">Profile</a>
               <a href="signout.php" class="btn btn-default btn-flat float-end">Sign out</a>
             </li>
             <!-- End Menu Footer -->
@@ -202,7 +202,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="leave_request_form.php" class="nav-link">
+                  <a href="leave_request_form_admin.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add Leave</p>
                   </a>
@@ -232,14 +232,15 @@
                     <!-- <i class="nav-icon bi bi-circle text-warning"></i> -->
                     <p>Reject</p>
                   </a>
-
                 </li>
+
                 <li class="nav-item">
                   <a href="display_leave_request.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Leave History</p>
                   </a>
                 </li>
+
                 <li class="nav-item">
                   <a href="holiday_form.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -267,58 +268,6 @@
             <!-- <span class="right badge badge-danger">New</span> -->
             </p>
             </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-copy"></i>
-            <p>
-            Layout Options
-            <i class="fas fa-angle-left right"></i>
-            <span class="badge badge-info right">6</span>
-            </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-            <li class="nav-item">
-            <a href="layout/top-nav.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Top Navigation</p>
-            </a>
-            </li>
-            
-            <li class="nav-item">
-            <a href="layout/boxed.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Boxed</p>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="layout/fixed-sidebar.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Sidebar</p>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="layout/fixed-topnav.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Navbar</p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="layout/fixed-footer.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Footer</p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="layout/collapsed-sidebar.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Collapsed Sidebar</p>
-            </a>
-            </li>
-            </ul>
             </li>
 
             <!-- Add more sidebar menu items here -->
@@ -349,16 +298,14 @@
             </div>
           </div>
         </div>
+
         <?php
-    // Check if the department ID is provided
-    if (!isset($_GET['id'])) {
-        echo "Department ID not provided.";
-        exit();
-    }
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["holiday_id"])) {
+    $holiday_id = $_POST["holiday_id"];
+    $updated_holiday_date = $_POST["holiday_date"];
+    $updated_holiday_name = $_POST["holiday_name"];
 
-    $departmentId = $_GET['id'];
-
-    // Connect to the database
+    // Connect to the database (Replace with your actual database credentials)
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -371,36 +318,22 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Fetch department details from the database
-    $sql = "SELECT * FROM department WHERE id = $departmentId";
-    $result = $conn->query($sql);
+    // Update the holiday data in the database
+    $sql = "UPDATE holidays SET holiday_date = ?, holiday_name = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $updated_holiday_date, $updated_holiday_name, $holiday_id);
 
-    if ($result->num_rows > 0) {
-      $department = $result->fetch_assoc();
-  
-      // Display the department form with pre-filled values
-      echo "<form method='post' action='update_department.php'>";
-      echo "<input type='hidden' name='id' value='" . $department['id'] . "'>";
-      echo "<div class='mb-3'>";
-      echo "<label for='name' class='form-label'>Name:</label>";
-      echo "<input type='text' name='d_name' id='d_name' class='form-control' value='" . $department['d_name'] . "' required>";
-      echo "</div>";
-      echo "<div class='mb-3'>";
-      echo "<label for='short_name' class='form-label'>Short Name:</label>";
-      echo "<input type='text' name='short_name' id='short_name' class='form-control' value='" . $department['short_name'] . "' required>";
-      echo "</div>";
-      echo "<div class='mb-3'>";
-      echo "<label for='code' class='form-label'>Code:</label>";
-      echo "<input type='text' name='code' id='code' class='form-control' value='" . $department['code'] . "' required>";
-      echo "</div>";
-      echo "<button type='submit' class='btn btn-primary'>Submit</button>";
-      echo "</form>";
-  } else {
-      echo "Department not found.";
-  }
-  
-  $conn->close();
-  ?>
+    if ($stmt->execute() === TRUE) {
+        echo "Holiday updated successfully.";
+    } else {
+        echo "Error updating holiday: " . $conn->error;
+    }
+
+    // Close the database connection
+    $stmt->close();
+    $conn->close();
+}
+?>
 
         <!-- Add your page content here -->
       </section>
@@ -427,3 +360,4 @@
   <script src="https://adminlte.io/themes/v3/dist/js/adminlte.min.js"></script>
 </body>
 </html>
+

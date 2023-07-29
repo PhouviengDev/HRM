@@ -238,7 +238,20 @@
                 <li class="nav-item">
                   <a href="display_leave_request.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>History</p>
+                    <p>Leave History</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="holiday_form.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add Holiday</p>
+                  </a>
+                </li>
+                
+                <li class="nav-item">
+                  <a href="display_holiday.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage Holiday</p>
                   </a>
                 </li>
                 
@@ -314,27 +327,35 @@ $result = $conn->query($sql);
 // Your PHP code here...
 
 if ($result->num_rows == 1) {
-    $row = $result->fetch_assoc();
-    $request_id = $row["id"];
-    $employee_id = $row["employee_id"];
-    $employee_name = $row["name"];
-    $start_date = $row["start_date"];
-    $end_date = $row["end_date"];
-    $status = $row["status"];
+  $row = $result->fetch_assoc();
+  $request_id = $row["id"];
+  $employee_id = $row["employee_id"];
+  $employee_name = $row["name"];
+  $start_date = $row["start_date"];
+  $end_date = $row["end_date"];
+  $status = $row["status"];
 
-    echo "<h2 class='mb-4'>Leave Request ID: $request_id</h2>";
-    echo "<div class='row mb-3'>";
-    echo "    <div class='col-md-6'>";
-    echo "        <p><strong>Employee ID:</strong> $employee_id</p>";
-    echo "        <p><strong>Employee Name:</strong> $employee_name</p>";
-    echo "        <p><strong>Start Date:</strong> $start_date</p>";
-    echo "        <p><strong>End Date:</strong> $end_date</p>";
-    echo "        <p><strong>Status:</strong> $status</p>";
-    echo "    </div>";
-    echo "    <div class='col-md-6'>";
-    echo "    </div>";
-    echo "</div>";
-    echo "<hr class='my-4'>";
+  // Calculate the number of days between start_date and end_date
+  $date1 = new DateTime($start_date);
+  $date2 = new DateTime($end_date);
+  $interval = $date1->diff($date2);
+  $number_of_days = $interval->format('%a');
+
+  echo "<h2 class='mb-4'>Leave Request ID: $request_id</h2>";
+  echo "<div class='row mb-3'>";
+  echo "    <div class='col-md-6'>";
+  echo "        <p><strong>Employee ID:</strong> $employee_id</p>";
+  echo "        <p><strong>Employee Name:</strong> $employee_name</p>";
+  echo "        <p><strong>Start Date:</strong> $start_date</p>";
+  echo "        <p><strong>End Date:</strong> $end_date</p>";
+  echo "        <p><strong>Number of Days:</strong> $number_of_days</p>"; // Display the number of days
+  echo "        <p><strong>Status:</strong> $status</p>";
+  echo "    </div>";
+  echo "    <div class='col-md-6'>";
+  echo "    </div>";
+  echo "</div>";
+  echo "<hr class='my-4'>";
+
 
     if ($status === 'Pending') {
         echo "<h3 class='mb-3'>Approval Actions:</h3>";

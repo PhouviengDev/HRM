@@ -238,7 +238,20 @@
                 <li class="nav-item">
                   <a href="display_leave_request.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>History</p>
+                    <p>Leave History</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="holiday_form.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add Holiday</p>
+                  </a>
+                </li>
+                
+                <li class="nav-item">
+                  <a href="display_holiday.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage Holiday</p>
                   </a>
                 </li>
                 
@@ -307,7 +320,7 @@
     if ($result->num_rows > 0) {
       // Generate the HTML table
       echo "<table class='table table-striped'>";
-      echo "<thead><tr><th>ID</th><th>Name</th><th>Description</th><th>Action</th></tr></thead>";
+      echo "<thead><tr><th>ID</th><th>Name</th><th>Description</th><th>Leave Balance</th><th>Action</th></tr></thead>";
       echo "<tbody>";
   
       while ($row = $result->fetch_assoc()) {
@@ -315,6 +328,7 @@
           echo "<td>" . $row["id"] . "</td>";
           echo "<td>" . $row["lt_name"] . "</td>";
           echo "<td>" . $row["description"] . "</td>";
+          echo "<td>" . $row["balance"] . "</td>";
           echo "<td>
                   <a href='edit_leave_type.php?id=" . $row["id"] . "' class='btn btn-primary btn-sm'>Edit</a> |
                   <a href='delete_leave_type.php?id=" . $row["id"] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this department?\")'>Delete</a>

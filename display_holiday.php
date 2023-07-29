@@ -49,7 +49,7 @@
          
             <!-- Menu Footer -->
             <li class="user-footer">
-              <a href="login_form.php" class="btn btn-default btn-flat">Login</a>
+              <a href="#" class="btn btn-default btn-flat">Profile</a>
               <a href="signout.php" class="btn btn-default btn-flat float-end">Sign out</a>
             </li>
             <!-- End Menu Footer -->
@@ -202,7 +202,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="leave_request_form.php" class="nav-link">
+                  <a href="leave_request_form_admin.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add Leave</p>
                   </a>
@@ -232,14 +232,15 @@
                     <!-- <i class="nav-icon bi bi-circle text-warning"></i> -->
                     <p>Reject</p>
                   </a>
-
                 </li>
+
                 <li class="nav-item">
                   <a href="display_leave_request.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Leave History</p>
                   </a>
                 </li>
+
                 <li class="nav-item">
                   <a href="holiday_form.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -267,58 +268,6 @@
             <!-- <span class="right badge badge-danger">New</span> -->
             </p>
             </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-copy"></i>
-            <p>
-            Layout Options
-            <i class="fas fa-angle-left right"></i>
-            <span class="badge badge-info right">6</span>
-            </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-            <li class="nav-item">
-            <a href="layout/top-nav.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Top Navigation</p>
-            </a>
-            </li>
-            
-            <li class="nav-item">
-            <a href="layout/boxed.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Boxed</p>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="layout/fixed-sidebar.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Sidebar</p>
-            </a>
-            </li>
-
-            <li class="nav-item">
-            <a href="layout/fixed-topnav.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Navbar</p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="layout/fixed-footer.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Footer</p>
-            </a>
-            </li>
-            <li class="nav-item">
-            <a href="layout/collapsed-sidebar.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Collapsed Sidebar</p>
-            </a>
-            </li>
-            </ul>
             </li>
 
             <!-- Add more sidebar menu items here -->
@@ -349,58 +298,64 @@
             </div>
           </div>
         </div>
-        <?php
-    // Check if the department ID is provided
-    if (!isset($_GET['id'])) {
-        echo "Department ID not provided.";
-        exit();
-    }
 
-    $departmentId = $_GET['id'];
+        <div class="container">
+        <h1 class="mt-4 mb-4">Holidays List</h1>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Holiday Date</th>
+                    <th>Holiday Name</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Connect to the database (Replace with your actual database credentials)
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "employee_leave_management";
 
-    // Connect to the database
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "employee_leave_management";
+                $conn = new mysqli($servername, $username, $password, $dbname);
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
 
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+                // Retrieve holidays data from the database
+                $sql = "SELECT id, holiday_date, holiday_name FROM holidays";
+                $result = $conn->query($sql);
 
-    // Fetch department details from the database
-    $sql = "SELECT * FROM department WHERE id = $departmentId";
-    $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    // Output data of each row
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . $row["holiday_date"] . "</td>";
+                        echo "<td>" . $row["holiday_name"] . "</td>";
+                        echo "<td><a href='edit_holiday.php?id=" . $row["id"] . "' class='btn btn-primary'>Edit</a></td>";
+                        echo "<td><a href='delete_holiday.php?id=" . $row["id"] . "' class='btn btn-danger' onclick='return confirmDelete();'>Delete</a></td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4'>No holidays found.</td></tr>";
+                }
 
-    if ($result->num_rows > 0) {
-      $department = $result->fetch_assoc();
-  
-      // Display the department form with pre-filled values
-      echo "<form method='post' action='update_department.php'>";
-      echo "<input type='hidden' name='id' value='" . $department['id'] . "'>";
-      echo "<div class='mb-3'>";
-      echo "<label for='name' class='form-label'>Name:</label>";
-      echo "<input type='text' name='d_name' id='d_name' class='form-control' value='" . $department['d_name'] . "' required>";
-      echo "</div>";
-      echo "<div class='mb-3'>";
-      echo "<label for='short_name' class='form-label'>Short Name:</label>";
-      echo "<input type='text' name='short_name' id='short_name' class='form-control' value='" . $department['short_name'] . "' required>";
-      echo "</div>";
-      echo "<div class='mb-3'>";
-      echo "<label for='code' class='form-label'>Code:</label>";
-      echo "<input type='text' name='code' id='code' class='form-control' value='" . $department['code'] . "' required>";
-      echo "</div>";
-      echo "<button type='submit' class='btn btn-primary'>Submit</button>";
-      echo "</form>";
-  } else {
-      echo "Department not found.";
-  }
-  
-  $conn->close();
-  ?>
+                // Close the database connection
+                $conn->close();
+                ?>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // JavaScript function to show a confirmation dialog before deleting the holiday
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this holiday?");
+        }
+    </script>
 
         <!-- Add your page content here -->
       </section>
@@ -427,3 +382,4 @@
   <script src="https://adminlte.io/themes/v3/dist/js/adminlte.min.js"></script>
 </body>
 </html>
+

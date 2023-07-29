@@ -232,15 +232,29 @@
                     <!-- <i class="nav-icon bi bi-circle text-warning"></i> -->
                     <p>Reject</p>
                   </a>
-
                 </li>
+
                 <li class="nav-item">
                   <a href="display_leave_request.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>History</p>
+                    <p>Leave History</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="holiday_form.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add Holiday</p>
                   </a>
                 </li>
                 
+                <li class="nav-item">
+                  <a href="display_holiday.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage Holiday</p>
+                  </a>
+                </li>
+
               </ul>
               <!-- End Submenu -->
             </li>

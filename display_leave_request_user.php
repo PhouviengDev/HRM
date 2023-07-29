@@ -186,67 +186,79 @@
           </div>
         </div>
 
+        <div class="container mt-5">
         <?php
-          // Connect to the database
-          $servername = "localhost";
-          $username = "root";
-          $password = "";
-          $dbname = "employee_leave_management";
+        // Connect to the database
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "employee_leave_management";
 
-          $conn = new mysqli($servername, $username, $password, $dbname);
+        $conn = new mysqli($servername, $username, $password, $dbname);
 
-          // Check connection
-          if ($conn->connect_error) {
-              die("Connection failed: " . $conn->connect_error);
-          }
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
 
-          // Retrieve the user's ID or username from the session
-          
-          if (isset($_SESSION['username'])) {
-              $username = $_SESSION['username'];
+        // Retrieve the user's ID or username from the session
 
-              // Retrieve leave requests for the current username
-              $sql = "SELECT lr.id, lr.employee_id, lr.start_date, lr.end_date, lr.created_at, lr.status, lr.reason, e.name
-                      FROM leave_requests lr
-                      INNER JOIN employees e ON lr.employee_id = e.id
-                      WHERE e.username = '$username'";
-              $result = $conn->query($sql);
+        if (isset($_SESSION['username'])) {
+            $username = $_SESSION['username'];
 
-              if ($result->num_rows > 0) {
-                  echo "<table id='leave-requests-table'>";
-                  echo "<tr>
-                      <th>ID</th>
-                      <th>Employee ID</th>
-                      <th>Employee Name</th>
-                      <th>Start Date</th>
-                      <th>End Date</th>
-                      <th>Applied On</th>
-                      <th>Status</th>
-                      <th>Reason</th>";
+            // Retrieve leave requests for the current username
+            $sql = "SELECT lr.id, lr.employee_id, lr.start_date, lr.end_date, lr.created_at, lr.status, lr.reason, e.name,
+                    TIMESTAMPDIFF(MINUTE, lr.start_date, lr.end_date) AS total_minutes,
+                    ROUND((TIMESTAMPDIFF(MINUTE, lr.start_date, lr.end_date) / 1440.0) * lr.leave_duration, 2) AS total_leave_duration_in_days
+                    FROM leave_requests lr
+                    INNER JOIN employees e ON lr.employee_id = e.id
+                    WHERE e.username = '$username'";
+            $result = $conn->query($sql);
 
-                  while ($row = $result->fetch_assoc()) {
-                      echo "<tr>";
-                      echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
-                      echo "<td>" . htmlspecialchars($row["employee_id"]) . "</td>";
-                      echo "<td>" . htmlspecialchars($row["name"]) . "</td>";
-                      echo "<td>" . htmlspecialchars($row["start_date"]) . "</td>";
-                      echo "<td>" . htmlspecialchars($row["end_date"]) . "</td>";
-                      echo "<td>" . htmlspecialchars($row["created_at"]) . "</td>";
-                      echo "<td>" . htmlspecialchars($row["status"]) . "</td>";
-                      echo "<td>" . htmlspecialchars($row["reason"]) . "</td>";
-                      echo "</tr>";
-                  }
+            if ($result->num_rows > 0) {
+                echo "<table class='table table-striped table-bordered'>";
+                echo "<thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Employee ID</th>
+                            <th>Employee Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Applied On</th>
+                            <th>Status</th>
+                            <th>Reason</th>
+                            <th>Total Leave Duration (Days)</th>
+                        </tr>
+                      </thead>
+                      <tbody>";
 
-                  echo "</table>";
-              } else {
-                  echo "No leave requests found.";
-              }
-          } else {
-              echo "Session not set.";
-          }
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["employee_id"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["name"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["start_date"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["end_date"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["created_at"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["status"]) . "</td>";
+                    echo "<td>" . htmlspecialchars($row["reason"]) . "</td>";
+                    echo "<td>" . number_format($row["total_leave_duration_in_days"], 2) . "</td>";
+                    echo "</tr>";
+                }
 
-          $conn->close();
-          ?>
+                echo "</tbody></table>";
+            } else {
+                echo "<p class='lead'>No leave requests found.</p>";
+            }
+        } else {
+            echo "<p class='lead'>Session not set.</p>";
+        }
+
+        $conn->close();
+        ?>
+    </div>
+
+
         </div>
 
         <!-- Add your page content here -->

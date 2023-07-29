@@ -292,6 +292,7 @@
         // Retrieve form data
         $lt_name = $_POST["lt_name"];
         $description = $_POST["description"];
+        $balance = $_POST["balance"];
 
         // Validate form data (add your own validation as needed)
 
@@ -309,7 +310,7 @@
         }
 
         // Insert leave type into the database
-        $sql = "INSERT INTO leave_types (lt_name, description) VALUES ('$lt_name', '$description')";
+        $sql = "INSERT INTO leave_types (lt_name, description, balance) VALUES ('$lt_name', '$description', $balance)";
 
         if ($conn->query($sql) === TRUE) {
             echo "Leave type added successfully.";
@@ -329,6 +330,9 @@
 
         <label for="description">Description:</label>
         <textarea name="description" id="description" rows="4" required></textarea>
+
+        <label for="balance" class="form-label">Leave Balance:</label>
+        <input type="text" name="balance" id="balance" class="form-control" rows="4" required></input>      
 
         <input type="submit" value="Submit">
     </form>

@@ -186,54 +186,110 @@
           </div>
         </div>
 
-        <form method="post" action="leave_request_submit.php">
-        <label for="employee_id">Employee ID:</label>
-        <input type="text" name="employee_id" id="employee_id" >
+        <div class="container mt-5">
+        <form method="post" action="leave_request_submit_user.php">
+            <div class="mb-3">
+                <label for="employee_id" class="form-label">Employee ID:</label>
+                <input type="text" name="employee_id" id="employee_id" class="form-control" >
+            </div>
 
-        <label for="start_date">Start Date:</label>
-        <input type="date" name="start_date" id="start_date" required>
+            <div class="mb-3">
+                <label for="leave_duration" class="form-label">Leave Duration:</label>
+                <select name="leave_duration" id="leave_duration" class="form-select" required>
+                    <option value="">Select Leave Duration</option>
+                    <option value="1.25">Full Day</option>
+                    <option value="0.63">Half Day (Morning)</option>
+                    <option value="0.63">Half Day (Afternoon)</option>
+                </select>
+            </div>
 
-        <label for="end_date">End Date:</label>
-        <input type="date" name="end_date" id="end_date" required>
+            <div class="mb-3">
+                <label for="start_date" class="form-label">Start Date:</label>
+                <input type="date" name="start_date" id="start_date" class="form-control" required
+                    onchange="calculateLeaveDuration()">
+            </div>
 
-        <label for="leave_type">Leave Type:</label>
-        <select name="leave_type" id="leave_type" required>
-            <option value="">Select Leave Type</option>
-            <?php
-            // Connect to the database
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "employee_leave_management";
+            <div class="mb-3">
+                <label for="end_date" class="form-label">End Date:</label>
+                <input type="date" name="end_date" id="end_date" class="form-control"
+                    onchange="calculateLeaveDuration()">
+            </div>
 
-            $conn = new mysqli($servername, $username, $password, $dbname);
+            <div class="mb-3">
+                <label for="leave_type" class="form-label">Leave Type:</label>
+                <select name="leave_type" id="leave_type" class="form-select" required>
+                    <option value="">Select Leave Type</option>
+                    <?php
+                    // Connect to the database
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $dbname = "employee_leave_management";
 
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-          
-            // Retrieve leave types from the database
-            $sql = "SELECT id, lt_name FROM leave_types";
-            $result = $conn->query($sql);
+                    $conn = new mysqli($servername, $username, $password, $dbname);
 
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<option value='" . $row["id"] . "'>" . $row["lt_name"] . "</option>";
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+
+                    // Retrieve leave types from the database
+                    $sql = "SELECT id, lt_name FROM leave_types";
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='" . $row["id"] . "'>" . $row["lt_name"] . "</option>";
+                        }
+                    }
+
+                    $conn->close();
+                    ?>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="reason" class="form-label">Reason:</label>
+                <textarea name="reason" id="reason" rows="3" class="form-control" required></textarea>
+            </div>
+
+            <!-- Include other leave request fields -->
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- Add Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- Add the provided JavaScript function -->
+    <script>
+        function calculateLeaveDuration() {
+            const startDate = new Date(document.getElementById('start_date').value);
+            const endDate = new Date(document.getElementById('end_date').value);
+            const leaveType = document.getElementById('leave_type').value;
+            const leaveDurationField = document.getElementById('leave_duration');
+            const totalLeaveDurationField = document.getElementById('total_leave_duration_in_days');
+
+            if (startDate && endDate && leaveType) {
+                const oneDay = 24 * 60 * 60 * 1000; // One day in milliseconds
+                const diffDays = Math.round(Math.abs((endDate - startDate) / oneDay)) + 1;
+                let leaveDuration = 0;
+
+                if (leaveType === '1.25') { // Full day
+                    leaveDuration = diffDays * 1.25;
+                } else if (leaveType === '0.63') { // Half day (Morning) or Half day (Afternoon)
+                    leaveDuration = 0.63 * diffDays;
                 }
+
+                leaveDurationField.value = leaveDuration.toFixed(2); // Display leave_duration with 2 decimal places
+                totalLeaveDurationField.value = leaveDuration.toFixed(2); // Set the total leave duration
+            } else {
+                leaveDurationField.value = '';
+                totalLeaveDurationField.value = ''; // Clear the total leave duration if any field is empty
             }
-
-            $conn->close();
-            ?>
-        </select>
-
-        <label for="reason">Reason:</label>
-        <textarea name="reason" id="reason" rows="3" required></textarea>
-
-        <!-- Include other leave request fields -->
-
-        <input type="submit" value="Submit">
-    </form>
+        }
+    </script>
 
         <!-- Add your page content here -->
       </section>

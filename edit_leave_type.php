@@ -238,7 +238,20 @@
                 <li class="nav-item">
                   <a href="display_leave_request.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>History</p>
+                    <p>Leave History</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="holiday_form.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add Holiday</p>
+                  </a>
+                </li>
+                
+                <li class="nav-item">
+                  <a href="display_holiday.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage Holiday</p>
                   </a>
                 </li>
                 
@@ -307,9 +320,10 @@
             // Retrieve the edited leave type information
             $lt_name = $_POST["lt_name"];
             $description = $_POST["description"];
+            $balance = $_POST["balance"];
 
             // Update the leave type in the database
-            $sql = "UPDATE leave_types SET lt_name='$lt_name', description='$description' WHERE id='$leaveTypeId'";
+            $sql = "UPDATE leave_types SET lt_name='$lt_name', description='$description', balance='$balance' WHERE id='$leaveTypeId'";
 
             if ($conn->query($sql) === TRUE) {
                 echo "Leave type updated successfully.";
@@ -326,6 +340,7 @@
             $row = $result->fetch_assoc();
             $lt_name = $row["lt_name"];
             $description = $row["description"];
+            $balance = $row["balance"];
             ?>
 
             <h2>Edit Leave Type</h2>
@@ -339,6 +354,11 @@
         <div class="mb-3">
             <label for="description" class="form-label">Description:</label>
             <textarea name="description" id="description" class="form-control" required><?php echo $description; ?></textarea>
+        </div>
+
+        <div class="mb-3">
+        <label for="balance" class="form-label">Leave Balance:</label>
+        <input type="text" name="balance" id="balance" class="form-control" value="<?php echo $balance; ?>" Required</input>
         </div>
 
         <button type="submit" class="btn btn-primary">Save</button>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +11,9 @@
   <!-- AdminLTE CSS -->
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css">
 </head>
+<?php
+session_start();
+?>
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
     <!-- Navbar -->
@@ -52,7 +53,7 @@
             <!-- Menu Footer -->
             <li class="user-footer">
               <a href="#" class="btn btn-default btn-flat">Profile</a>
-              <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+              <a href="signout.php" class="btn btn-default btn-flat float-end">Sign out</a>
             </li>
             <!-- End Menu Footer -->
           </ul>
@@ -106,74 +107,19 @@
               </p>
               </a>
               </li>
-
-
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-globe"></i> -->
-                  <!-- <i class="nav-icon fas fa-office"></i> -->
-                  <!-- <i class="nav-icon fas fa-school"></i> -->
-                  <!-- <i class="nav-icon fas fa-music"></i> -->
-                  <!-- <i class="nav-icon fas fa-heart"></i> -->
-                  <!-- <i class="nav-icon fas fa-camera"></i> -->
-                  <!-- <i class="nav-icon fas fa-star"></i> -->
-                  <!-- <i class="nav-icon fas fa-search"></i> -->
-                  <i class="nav-icon fas fa-house"></i>
-
-
-                <p>
-                  Department
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <!-- Submenu -->
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="department_insert_form.php" class="nav-link">
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <i class="far fa-heart nav-icon"></i>
-                    <p>Add Department</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_department.php" class="nav-link">
-                    <i class="fas fa-circle nav-icon"></i>
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <p>Manage Department</p>
-                  </a>
-                </li>
-              </ul>
-              <!-- End Submenu -->
-            </li>
-
+               
             <!-- Dashboard Link -->
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <!-- <i class="nav-icon fas fa-tachometer-alt"></i> -->
                 <i class="nav-icon fas fa-user"></i>
                  <p>
-                  Employee
-                  <i class="right fas fa-angle-left"></i>  
+                  My Profile
+                  <!-- <i class="right fas fa-angle-left"></i>   -->
                 </p>
               </a>
               <!-- Submenu -->
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="employee_insert_form.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Add Employee</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_employee.php" class="nav-link">
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <i class="fas fa-circle nav-icon"></i>
-
-                    <p>Manage Employee</p>
-                  </a>
-                </li>
-                
-              </ul>
+            
               <!-- End Submenu -->
             </li>
 
@@ -191,87 +137,26 @@
               </a>
               <!-- Submenu -->
               <ul class="nav nav-treeview">
+             
                 <li class="nav-item">
-                  <a href="leave_type_form.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Leave Type</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_leave_type.php" class="nav-link">
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <i class="fas fa-circle nav-icon text-primary"></i>
-                    <p>Manage Leave Type</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="leave_request_form_admin.php" class="nav-link">
+                  <a href="leave_request_form_user.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add Leave</p>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="leave_request_approvals.php" class="nav-link">
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <i class="fas fa-circle nav-icon text-primary"></i>
-                    <p>Manage Leave</p>
-                  </a>
+             
                 </li>
                 <li class="nav-item">
-                  <a href="display_leave_request_pending.php" class="nav-link">
-                    <i class="far fa-circle nav-icon text-warning"></i>
-                    <p>Pending</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_leave_request_approve.php" class="nav-link">
-                    <i class="far fa-circle nav-icon text-info"></i>
-                    <p>Approve</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_leave_request_reject.php" class="nav-link">
-                    <i class="far fa-circle nav-icon text-danger"></i>
-                    <!-- <i class="nav-icon bi bi-circle text-warning"></i> -->
-                    <p>Reject</p>
-                  </a>
-
-                </li>
-                <li class="nav-item">
-                  <a href="display_leave_request.php" class="nav-link">
+                  <a href="display_leave_request_user.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Leave History</p>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="holiday_form.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Add Holiday</p>
-                  </a>
-                </li>
-                
-                <li class="nav-item">
-                  <a href="display_holiday.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Manage Holiday</p>
-                  </a>
-                </li>
-                
+                            
               </ul>
               <!-- End Submenu -->
             </li>
 
-            <li class="nav-item">
-            <a href="widgets.html" class="nav-link">
-            <!-- <i class="nav-icon fas fa-th"></i> -->
-            <i class="nav-icon fas fa-door-open"></i>
-            <p>
-            Manage Admin
-            <!-- <span class="right badge badge-danger">New</span> -->
-            </p>
-            </a>
-            </li>
-            
             <!-- Add more sidebar menu items here -->
           </ul>
         </nav>
@@ -289,17 +174,18 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Employee</h1>
+                <h1 class="m-0">Dashboard</h1>
               </div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active">Employee</li>
+                  <li class="breadcrumb-item active">Dashboard</li>
                 </ol>
               </div>
             </div>
           </div>
         </div>
+
         <?php
 // Connect to the database
 $servername = "localhost";
@@ -314,36 +200,45 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch department data from the database
-$sql = "SELECT * FROM department";
-$result = $conn->query($sql);
+// Retrieve the user's ID or username from the session
+
+$username = $_SESSION['username'];
+
+// Prepare a statement to retrieve the employee ID based on the username
+$stmt = $conn->prepare("SELECT id FROM employees WHERE username = ?");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-  // Generate the HTML table
-  echo "<table class='table table-striped'>";
-  echo "<thead><tr><th>ID</th><th>Name</th><th>Short Name</th><th>Code</th><th>Actions</th></tr></thead>";
-  echo "<tbody>";
+    $row = $result->fetch_assoc();
+    $employee_id = $row['id'];
 
-  while ($row = $result->fetch_assoc()) {
-      echo "<tr>";
-      echo "<td>" . $row["id"] . "</td>";
-      echo "<td>" . $row["d_name"] . "</td>";
-      echo "<td>" . $row["short_name"] . "</td>";
-      echo "<td>" . $row["code"] . "</td>";
-      echo "<td>";
-      echo "<a href='edit_department.php?id=" . $row["id"] . "' class='btn btn-primary btn-sm'>Edit</a>";
-      echo " | ";
-      echo "<a href='delete_department.php?id=" . $row["id"] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this department?\")'>Delete</a>";
-      echo "</td>";
-      echo "</tr>";
-  }
+    // Insert the leave request
+    $stmt = $conn->prepare("INSERT INTO leave_requests (employee_id, leave_duration, start_date, end_date, created_at, status, reason, leave_type_id)
+                            VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)");
+    $stmt->bind_param("sssssss", $employee_id, $leave_duration, $start_date, $end_date, $status, $reason, $leaveType);
 
-  echo "</tbody>";
-  echo "</table>";
+    // Set the values for the leave request
+    $leave_duration = $_POST['leave_duration'];
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+    $status = "Pending";
+    $reason = $_POST['reason'];
+    $leaveType = $_POST["leave_type"];
+
+    // Execute the statement
+    if ($stmt->execute()) {
+        echo "Leave request submitted successfully.";
+        
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
 } else {
-  echo "No departments found.";
+    echo "Invalid username.";
 }
-
 
 $conn->close();
 ?>

@@ -203,7 +203,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="leave_request_form_admin.php" class="nav-link">
+                  <a href="leave_request_form.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add Leave</p>
                   </a>
@@ -238,7 +238,20 @@
                 <li class="nav-item">
                   <a href="display_leave_request.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>History</p>
+                    <p>Leave History</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="holiday_form.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add Holiday</p>
+                  </a>
+                </li>
+                
+                <li class="nav-item">
+                  <a href="display_holiday.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage Holiday</p>
                   </a>
                 </li>
                 
@@ -292,6 +305,7 @@
         // Retrieve form data
         $lt_name = $_POST["lt_name"];
         $description = $_POST["description"];
+        $balance = $_POST["balance"];
 
         // Validate form data (add your own validation as needed)
 
@@ -309,7 +323,7 @@
         }
 
         // Insert leave type into the database
-        $sql = "INSERT INTO leave_types (lt_name, description) VALUES ('$lt_name', '$description')";
+        $sql = "INSERT INTO leave_types (lt_name, description, balance) VALUES ('$lt_name', '$description', '$balance')";
 
         if ($conn->query($sql) === TRUE) {
             echo "Leave type added successfully.";
@@ -330,6 +344,11 @@
     <div class="mb-3">
         <label for="description" class="form-label">Description:</label>
         <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="balance" class="form-label">Leave Balance:</label>
+        <input type="text" name="balance" id="balance" class="form-control" rows="4" required></input>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
