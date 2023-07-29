@@ -11,6 +11,9 @@
   <!-- AdminLTE CSS -->
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css">
 </head>
+
+<?php  session_start(); ?> 
+
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
     <!-- Navbar -->
@@ -33,7 +36,7 @@
           <!-- User Menu Toggle -->
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="image/user2-160x160.jpg" class="user-image rounded-circle shadow" alt="User Image">
-            <span class="d-none d-md-inline">Phouvieng KPL</span>
+            <span class="d-none d-md-inline"></span> <?php echo $_SESSION['username']; ?></span>
           </a>
           <!-- User Menu Dropdown -->
           <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
@@ -96,7 +99,7 @@
             <!-- Dashboard Link -->
 
               <li class="nav-item">
-              <a href="widgets.html" class="nav-link active">
+              <a href="admin_page.php" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
               Dashboard

@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css">
 </head>
 
-<?php  session_start(); ?> 
+<?php  session_start(); ?>
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
@@ -45,6 +45,7 @@
               <img src="image/user2-160x160.jpg" class="rounded-circle shadow" alt="User Image">
               <p>
                 CSE IT Dev
+                <?php echo $_SESSION['username']; ?>
                 <small>Member since July. 2023</small>
               </p>
             </li>
@@ -53,7 +54,7 @@
             <!-- Menu Footer -->
             <li class="user-footer">
               <a href="#" class="btn btn-default btn-flat">Profile</a>
-              <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+              <a href="signout.php" class="btn btn-default btn-flat float-end">Sign out</a>
             </li>
             <!-- End Menu Footer -->
           </ul>
@@ -99,7 +100,7 @@
             <!-- Dashboard Link -->
 
               <li class="nav-item">
-              <a href="admin_page.php" class="nav-link active">
+              <a href="user_page.php" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
               Dashboard
@@ -107,74 +108,19 @@
               </p>
               </a>
               </li>
-
-
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                  <!-- <i class="nav-icon fas fa-globe"></i> -->
-                  <!-- <i class="nav-icon fas fa-office"></i> -->
-                  <!-- <i class="nav-icon fas fa-school"></i> -->
-                  <!-- <i class="nav-icon fas fa-music"></i> -->
-                  <!-- <i class="nav-icon fas fa-heart"></i> -->
-                  <!-- <i class="nav-icon fas fa-camera"></i> -->
-                  <!-- <i class="nav-icon fas fa-star"></i> -->
-                  <!-- <i class="nav-icon fas fa-search"></i> -->
-                  <i class="nav-icon fas fa-house"></i>
-
-
-                <p>
-                  Department
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <!-- Submenu -->
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="department_insert_form.php" class="nav-link">
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <i class="far fa-heart nav-icon"></i>
-                    <p>Add Department</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_department.php" class="nav-link">
-                    <i class="fas fa-circle nav-icon"></i>
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <p>Manage Department</p>
-                  </a>
-                </li>
-              </ul>
-              <!-- End Submenu -->
-            </li>
-
+               
             <!-- Dashboard Link -->
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="display_employee_user.php" class="nav-link">
                 <!-- <i class="nav-icon fas fa-tachometer-alt"></i> -->
                 <i class="nav-icon fas fa-user"></i>
                  <p>
-                  Employee
-                  <i class="right fas fa-angle-left"></i>  
+                  My Profile
+                  <!-- <i class="right fas fa-angle-left"></i>   -->
                 </p>
               </a>
               <!-- Submenu -->
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="employee_insert_form.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Add Employee</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_employee.php" class="nav-link">
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <i class="fas fa-circle nav-icon"></i>
-
-                    <p>Manage Employee</p>
-                  </a>
-                </li>
-                
-              </ul>
+            
               <!-- End Submenu -->
             </li>
 
@@ -192,69 +138,19 @@
               </a>
               <!-- Submenu -->
               <ul class="nav nav-treeview">
+             
                 <li class="nav-item">
-                  <a href="leave_type_form.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Leave Type</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_leave_type.php" class="nav-link">
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <i class="fas fa-circle nav-icon text-primary"></i>
-                    <p>Manage Leave Type</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="leave_request_form_admin.php" class="nav-link">
+                  <a href="leave_request_form_user.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add Leave</p>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="leave_request_approvals.php" class="nav-link">
-                    <!-- <i class="far fa-circle nav-icon"></i> -->
-                    <i class="fas fa-circle nav-icon text-primary"></i>
-                    <p>Manage Leave</p>
-                  </a>
+             
                 </li>
                 <li class="nav-item">
-                  <a href="display_leave_request_pending.php" class="nav-link">
-                    <i class="far fa-circle nav-icon text-warning"></i>
-                    <p>Pending</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_leave_request_approve.php" class="nav-link">
-                    <i class="far fa-circle nav-icon text-info"></i>
-                    <p>Approve</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="display_leave_request_reject.php" class="nav-link">
-                    <i class="far fa-circle nav-icon text-danger"></i>
-                    <!-- <i class="nav-icon bi bi-circle text-warning"></i> -->
-                    <p>Reject</p>
-                  </a>
-
-                </li>
-                <li class="nav-item">
-                  <a href="display_leave_request.php" class="nav-link">
+                  <a href="display_leave_request_user.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Leave History</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="holiday_form.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Add Holiday</p>
-                  </a>
-                </li>
-                
-                <li class="nav-item">
-                  <a href="display_holiday.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Manage Holiday</p>
                   </a>
                 </li>
                 
@@ -262,18 +158,7 @@
               <!-- End Submenu -->
             </li>
 
-            <li class="nav-item">
-            <a href="widgets.html" class="nav-link">
-            <!-- <i class="nav-icon fas fa-th"></i> -->
-            <i class="nav-icon fas fa-door-open"></i>
-            <p>
-            Manage Admin
-            <!-- <span class="right badge badge-danger">New</span> -->
-            </p>
-            </a>
-            </li>
-
-          <!-- Add more sidebar menu items here -->
+            <!-- Add more sidebar menu items here -->
           </ul>
         </nav>
 
@@ -290,47 +175,97 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Dapartment</h1>
+                <h1 class="m-0">Dashboard</h1>
               </div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active">Department</li>
+                  <li class="breadcrumb-item active">My Profile</li>
                 </ol>
               </div>
             </div>
           </div>
         </div>
 
-<div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Insert Department</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form method="post" action="department_insert_data.php">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="d_name">Department Name:</label>
-                    <input type="text" class="form-control" name="d_name" placeholder="Department name">
-                  </div>
-                  <div class="form-group">
-                    <label for="short_name">Department Short Name:</label>
-                    <input type="text" class="form-control" name="short_name" placeholder="Department short name">
-                  </div>
-                  <div class="form-group">
-                    <label for="code">Department Code:</label>
-                    <input type="text" class="form-control" name="code" placeholder="Department code">
-                  </div>                 
-                </div>
-                <!-- /.card-body -->
+        <?php
+// Start the session (assuming you've already started the session during login)
+session_start();
 
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </form>
-            </div>
+// Connect to the database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "employee_leave_management";
 
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Retrieve the logged-in username from the session (make sure you store the username during login)
+if (isset($_SESSION['username'])) {
+    $loggedInUsername = $_SESSION['username'];
+
+    // Fetch employee data for the logged-in username from the database
+    $sql = "SELECT employees.*, department.d_name AS department_name
+            FROM employees
+            INNER JOIN department ON employees.department_id = department.id
+            WHERE employees.username = '$loggedInUsername'";
+    
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Generate the HTML table with Bootstrap classes
+        echo "<table class='table table-bordered table-striped'>";
+        echo "<thead class='table-dark'>";
+        echo "<tr><th>ID</th><th>Name</th><th>Email</th><th>Designation</th><th>Department</th><th>Hire Date</th><th>Actions</th></tr>";
+        echo "</thead>";
+    
+        echo "<tbody>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $row["id"] . "</td>";
+            echo "<td>" . $row["name"] . "</td>";
+            echo "<td>" . $row["email"] . "</td>";
+            echo "<td>" . $row["designation"] . "</td>";
+            echo "<td>" . $row["department_name"] . "</td>";
+            echo "<td>" . $row["hire_date"] . "</td>";
+            echo "<td class='button-container'>";
+            echo "<button class='btn btn-primary edit-button' onclick='editEmployee(" . $row["id"] . ")'>Edit</button>";
+            echo "<button class='btn btn-danger delete-button' onclick='deleteEmployee(" . $row["id"] . ")'>Delete</button>";
+            echo "</td>";
+            echo "</tr>";
+        }
+        echo "</tbody>";
+    
+        echo "</table>";
+    } else {
+        echo "No employees found.";
+    }
+} else {
+    echo "Username not found in session. Please login first.";
+}
+
+$conn->close();
+?>
+
+<script>
+    function editEmployee(employeeId) {
+        // Redirect to the edit employee page with the employee ID
+        window.location.href = "edit_employee_user.php?id=" + employeeId;
+    }
+
+    function deleteEmployee(employeeId) {
+        // Show a confirmation dialog before deleting the employee
+        if (confirm("Are you sure you want to delete this employee?")) {
+            // Redirect to the delete employee page with the employee ID
+            window.location.href = "delete_employee.php?id=" + employeeId;
+        }
+    }
+</script>
+    
         <!-- Add your page content here -->
       </section>
     </div>

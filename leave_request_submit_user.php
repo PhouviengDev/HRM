@@ -99,7 +99,7 @@ session_start();
             <!-- Dashboard Link -->
 
               <li class="nav-item">
-              <a href="widgets.html" class="nav-link active">
+              <a href="user_page.php" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
               Dashboard
@@ -110,7 +110,7 @@ session_start();
                
             <!-- Dashboard Link -->
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="display_employee_user.php" class="nav-link">
                 <!-- <i class="nav-icon fas fa-tachometer-alt"></i> -->
                 <i class="nav-icon fas fa-user"></i>
                  <p>

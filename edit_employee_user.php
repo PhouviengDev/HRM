@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +55,7 @@
             <!-- Menu Footer -->
             <li class="user-footer">
               <a href="#" class="btn btn-default btn-flat">Profile</a>
-              <a href="signout.php" class="btn btn-default btn-flat float-end">Sign out</a>
+              <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
             </li>
             <!-- End Menu Footer -->
           </ul>
@@ -96,20 +98,10 @@
 
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Dashboard Link -->
 
-              <li class="nav-item">
-              <a href="user_page.php" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-              Dashboard
-              <!-- <span class="right badge badge-danger">New</span> -->
-              </p>
-              </a>
-              </li>
-               
-            <!-- Dashboard Link -->
-            <li class="nav-item">
+          
+                      <!-- Dashboard Link -->
+                      <li class="nav-item">
               <a href="display_employee_user.php" class="nav-link">
                 <!-- <i class="nav-icon fas fa-tachometer-alt"></i> -->
                 <i class="nav-icon fas fa-user"></i>
@@ -154,8 +146,14 @@
                 </li>
                 
               </ul>
+                </li>
+         
+                
+              </ul>
               <!-- End Submenu -->
-            </li>
+          
+
+ 
 
             <!-- Add more sidebar menu items here -->
           </ul>
@@ -174,71 +172,99 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Dashboard</h1>
+                <h1 class="m-0">Employee</h1>
               </div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active">Dashboard</li>
+                  <li class="breadcrumb-item active">Employee</li>
                 </ol>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
-                <p>New Orders</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+        <?php
+    // Check if the employee ID is provided
+    if (!isset($_GET['id'])) {
+        echo "Employee ID not provided.";
+        exit();
+    }
 
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-                <p>Bounce Rate</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+    $employeeId = $_GET['id'];
 
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
+    // Connect to the database
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "employee_leave_management";
 
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
-                <p>Unique Visitors</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-        </div>
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Fetch employee details from the database
+    $sql = "SELECT * FROM employees WHERE id = $employeeId";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $employee = $result->fetch_assoc();
+
+        // Fetch department options from the database
+        $departmentOptions = "";
+        $departmentSql = "SELECT id, d_name FROM department";
+        $departmentResult = $conn->query($departmentSql);
+
+        if ($departmentResult->num_rows > 0) {
+          while ($row = $departmentResult->fetch_assoc()) {
+              $selected = ($row['id'] == $employee['department_id']) ? 'selected' : '';
+              $departmentOptions .= "<option value='" . $row['id'] . "' $selected>" . $row['d_name'] . "</option>";
+          }
+      }
+      
+      // Display the employee form with pre-filled values and department dropdown
+      echo "<form method='post' action='update_employee.php'>";
+      echo "<input type='hidden' name='id' value='" . $employee['id'] . "'>";
+      
+      echo "<div class='mb-3'>";
+      echo "<label for='name' class='form-label'>Name:</label>";
+      echo "<input type='text' name='name' id='name' class='form-control' value='" . $employee['name'] . "' required>";
+      echo "</div>";
+      
+      echo "<div class='mb-3'>";
+      echo "<label for='email' class='form-label'>Email:</label>";
+      echo "<input type='text' name='email' id='email' class='form-control' value='" . $employee['email'] . "' required>";
+      echo "</div>";
+      
+      echo "<div class='mb-3'>";
+      echo "<label for='designation' class='form-label'>Designation:</label>";
+      echo "<input type='text' name='designation' id='designation' class='form-control' value='" . $employee['designation'] . "' required>";
+      echo "</div>";
+      
+      echo "<div class='mb-3'>";
+      echo "<label for='department' class='form-label'>Department:</label>";
+      echo "<select name='department' id='department' class='form-select' required>";
+      echo "<option value=''>Select Department</option>";
+      echo $departmentOptions;
+      echo "</select>";
+      echo "</div>";
+      
+      echo "<div class='mb-3'>";
+      echo "<label for='hire_date' class='form-label'>Hire Date:</label>";
+      echo "<input type='date' name='hire_date' id='hire_date' class='form-control' value='" . $employee['hire_date'] . "' required>";
+      echo "</div>";
+      
+      echo "<button type='submit' class='btn btn-primary'>Submit</button>";
+      echo "</form>";
+      } else {
+      echo "Employee not found.";
+      }
+      
+      $conn->close();
+      ?>
 
         <!-- Add your page content here -->
       </section>

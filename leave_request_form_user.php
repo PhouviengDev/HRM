@@ -99,7 +99,7 @@
             <!-- Dashboard Link -->
 
               <li class="nav-item">
-              <a href="widgets.html" class="nav-link active">
+              <a href="user_page.php" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
               Dashboard
@@ -110,7 +110,7 @@
                
             <!-- Dashboard Link -->
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="display_employee_user.php" class="nav-link">
                 <!-- <i class="nav-icon fas fa-tachometer-alt"></i> -->
                 <i class="nav-icon fas fa-user"></i>
                  <p>
@@ -179,7 +179,7 @@
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active">Dashboard</li>
+                  <li class="breadcrumb-item active">Leave</li>
                 </ol>
               </div>
             </div>
@@ -194,16 +194,6 @@
             </div>
 
             <div class="mb-3">
-                <label for="leave_duration" class="form-label">Leave Duration:</label>
-                <select name="leave_duration" id="leave_duration" class="form-select" required>
-                    <option value="">Select Leave Duration</option>
-                    <option value="1.25">Full Day</option>
-                    <option value="0.63">Half Day (Morning)</option>
-                    <option value="0.63">Half Day (Afternoon)</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
                 <label for="start_date" class="form-label">Start Date:</label>
                 <input type="date" name="start_date" id="start_date" class="form-control" required
                     onchange="calculateLeaveDuration()">
@@ -213,6 +203,16 @@
                 <label for="end_date" class="form-label">End Date:</label>
                 <input type="date" name="end_date" id="end_date" class="form-control"
                     onchange="calculateLeaveDuration()">
+            </div>
+
+            <div class="mb-3">
+                <label for="leave_duration" class="form-label">Leave Duration:</label>
+                <select name="leave_duration" id="leave_duration" class="form-select" required>
+                    <option value="">Select Leave Duration</option>
+                    <option value="1.25">Full Day</option>
+                    <option value="0.63">Half Day (Morning)</option>
+                    <option value="0.63">Half Day (Afternoon)</option>
+                </select>
             </div>
 
             <div class="mb-3">
