@@ -187,6 +187,8 @@
         </div>
 
         <div class="container mt-5">
+
+
         <?php
         // Connect to the database
         $servername = "localhost";
@@ -209,7 +211,7 @@
             // Retrieve leave requests for the current username
             $sql = "SELECT lr.id, lr.employee_id, lr.start_date, lr.end_date, lr.created_at, lr.status, lr.reason, e.name,
                     TIMESTAMPDIFF(MINUTE, lr.start_date, lr.end_date) AS total_minutes,
-                    ROUND((TIMESTAMPDIFF(MINUTE, lr.start_date, lr.end_date) / 1440.0) * lr.leave_duration, 2) AS total_leave_duration_in_days
+                    ROUND((TIMESTAMPDIFF(MINUTE, lr.start_date, lr.end_date) / 1440.0) * lr.day_type, 2) AS total_leave_duration_in_days
                     FROM leave_requests lr
                     INNER JOIN employees e ON lr.employee_id = e.id
                     WHERE e.username = '$username'";
@@ -256,6 +258,7 @@
 
         $conn->close();
         ?>
+        
     </div>
 
 

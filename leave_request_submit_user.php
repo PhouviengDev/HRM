@@ -186,7 +186,7 @@ session_start();
           </div>
         </div>
 
-        <?php
+<?php
 // Connect to the database
 $servername = "localhost";
 $username = "root";
@@ -201,7 +201,7 @@ if ($conn->connect_error) {
 }
 
 // Retrieve the user's ID or username from the session
-
+session_start(); // Don't forget to start the session
 $username = $_SESSION['username'];
 
 // Prepare a statement to retrieve the employee ID based on the username
@@ -214,13 +214,19 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $employee_id = $row['id'];
 
+    // Calculate the number of days between the start_date and end_date
+    $start_date = new DateTime($_POST['start_date']);
+    $end_date = new DateTime($_POST['end_date']);
+    $interval = $start_date->diff($end_date);
+    $days = $interval->days + 1; // Add 1 day to include both start and end dates
+
     // Insert the leave request
-    $stmt = $conn->prepare("INSERT INTO leave_requests (employee_id, leave_duration, start_date, end_date, created_at, status, reason, leave_type_id)
-                            VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)");
-    $stmt->bind_param("sssssss", $employee_id, $leave_duration, $start_date, $end_date, $status, $reason, $leaveType);
+    $stmt = $conn->prepare("INSERT INTO leave_requests (employee_id, day_type, start_date, end_date, days, created_at, status, reason, leave_type_id)
+                            VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, ?)");
+    $stmt->bind_param("ssssdsss", $employee_id, $day_type, $start_date, $end_date, $days, $status, $reason, $leaveType);
 
     // Set the values for the leave request
-    $leave_duration = $_POST['leave_duration'];
+    $day_type = $_POST['day_type'];
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
     $status = "Pending";
@@ -230,7 +236,6 @@ if ($result->num_rows > 0) {
     // Execute the statement
     if ($stmt->execute()) {
         echo "Leave request submitted successfully.";
-        
     } else {
         echo "Error: " . $stmt->error;
     }
@@ -242,7 +247,6 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 ?>
-
 
         <!-- Add your page content here -->
       </section>

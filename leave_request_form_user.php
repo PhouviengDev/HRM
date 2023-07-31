@@ -194,28 +194,6 @@
             </div>
 
             <div class="mb-3">
-                <label for="start_date" class="form-label">Start Date:</label>
-                <input type="date" name="start_date" id="start_date" class="form-control" required
-                    onchange="calculateLeaveDuration()">
-            </div>
-
-            <div class="mb-3">
-                <label for="end_date" class="form-label">End Date:</label>
-                <input type="date" name="end_date" id="end_date" class="form-control"
-                    onchange="calculateLeaveDuration()">
-            </div>
-
-            <div class="mb-3">
-                <label for="leave_duration" class="form-label">Leave Duration:</label>
-                <select name="leave_duration" id="leave_duration" class="form-select" required>
-                    <option value="">Select Leave Duration</option>
-                    <option value="1.25">Full Day</option>
-                    <option value="0.63">Half Day (Morning)</option>
-                    <option value="0.63">Half Day (Afternoon)</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
                 <label for="leave_type" class="form-label">Leave Type:</label>
                 <select name="leave_type" id="leave_type" class="form-select" required>
                     <option value="">Select Leave Type</option>
@@ -249,6 +227,32 @@
             </div>
 
             <div class="mb-3">
+                <label for="day_type" class="form-label">Day Type:</label>
+                <select name="day_type" id="day_type" class="form-select" required>
+                    <option value="">Select Day Type</option>
+                    <option value="1">Whole Day</option>
+                    <option value="0.5">Half Day</option>
+                    </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="start_date" class="form-label">Start Date:</label>
+                <input type="date" name="start_date" id="start_date" class="form-control" required
+                    onchange="calculateLeaveDuration()">
+            </div>
+
+            <div class="mb-3">
+                <label for="end_date" class="form-label">End Date:</label>
+                <input type="date" name="end_date" id="end_date" class="form-control"
+                    onchange="calculateLeaveDuration()">
+            </div>
+
+            <div class="mb-3">
+                <label for="days" class="form-label">Days:</label>
+                <text name="days" id="days" rows="3" class="form-control" ></text>
+            </div>
+
+            <div class="mb-3">
                 <label for="reason" class="form-label">Reason:</label>
                 <textarea name="reason" id="reason" rows="3" class="form-control" required></textarea>
             </div>
@@ -263,37 +267,49 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
     <!-- Add the provided JavaScript function -->
+
+    <!-- Your existing HTML code -->
+
     <script>
-        function calculateLeaveDuration() {
-            const startDate = new Date(document.getElementById('start_date').value);
-            const endDate = new Date(document.getElementById('end_date').value);
-            const leaveType = document.getElementById('leave_type').value;
-            const leaveDurationField = document.getElementById('leave_duration');
-            const totalLeaveDurationField = document.getElementById('total_leave_duration_in_days');
+    function calculateLeaveDuration() {
+        const startDateInput = document.getElementById("start_date");
+        const endDateInput = document.getElementById("end_date");
+        const dayTypeSelect = document.getElementById("day_type");
+        const daysField = document.getElementById("days");
 
-            if (startDate && endDate && leaveType) {
-                const oneDay = 24 * 60 * 60 * 1000; // One day in milliseconds
-                const diffDays = Math.round(Math.abs((endDate - startDate) / oneDay)) + 1;
-                let leaveDuration = 0;
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
+        const dayType = parseFloat(dayTypeSelect.value);
 
-                if (leaveType === '1.25') { // Full day
-                    leaveDuration = diffDays * 1.25;
-                } else if (leaveType === '0.63') { // Half day (Morning) or Half day (Afternoon)
-                    leaveDuration = 0.63 * diffDays;
-                }
+        // Calculate the difference in milliseconds
+        const diffInMilliseconds = endDate - startDate;
 
-                leaveDurationField.value = leaveDuration.toFixed(2); // Display leave_duration with 2 decimal places
-                totalLeaveDurationField.value = leaveDuration.toFixed(2); // Set the total leave duration
-            } else {
-                leaveDurationField.value = '';
-                totalLeaveDurationField.value = ''; // Clear the total leave duration if any field is empty
-            }
+        // Convert milliseconds to days
+        let diffInDays = diffInMilliseconds / (1000 * 60 * 60 * 24);
+
+        // Check if the start date and end date are the same day or end date is the next day
+        if (startDate.getFullYear() === endDate.getFullYear() &&
+            startDate.getMonth() === endDate.getMonth() &&
+            startDate.getDate() === endDate.getDate()) {
+            diffInDays = 1.0;
+        } else if (diffInMilliseconds >= 0 && startDate.getDate() !== endDate.getDate()) {
+            diffInDays += 1;
         }
-    </script>
+
+        // If the day type is half day, reduce the calculated days by 0.5
+        if (dayType === 0.5) {
+            diffInDays -= 0.5;
+        }
+
+        // Display the calculated duration in the "Days" field
+        daysField.textContent = diffInDays.toFixed(1); // Show one decimal place
+    }
+</script>
+
 
         <!-- Add your page content here -->
-      </section>
-    </div>
+      <!-- </section>
+    </div> -->
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->
