@@ -317,7 +317,7 @@ if ($conn->connect_error) {
 $request_id = $_GET['id'];
 
 // Retrieve leave request details
-$sql = "SELECT lr.id, lr.employee_id, lr.start_date, lr.end_date, lr.status, e.name
+$sql = "SELECT lr.id, lr.employee_id, lr.start_date, lr.end_date, lr.status, e.name, lr.days, lr.day_type
         FROM leave_requests lr
         INNER JOIN employees e ON lr.employee_id = e.id
         WHERE lr.id = '$request_id'";
@@ -334,12 +334,19 @@ if ($result->num_rows == 1) {
   $start_date = $row["start_date"];
   $end_date = $row["end_date"];
   $status = $row["status"];
+  $days = $row["days"];
+  $day_type = $row["day_type"]; // Assuming day_type field exists in the table
 
-  // Calculate the number of days between start_date and end_date
-  $date1 = new DateTime($start_date);
-  $date2 = new DateTime($end_date);
-  $interval = $date1->diff($date2);
-  $number_of_days = $interval->format('%a');
+  // Reduce the number of days by 0.5 if day_type is 0.5
+  if ($day_type == 0.5) {
+      $days -= 0.5;
+  }
+
+  // // Calculate the number of days between start_date and end_date
+  // $date1 = new DateTime($start_date);
+  // $date2 = new DateTime($end_date);
+  // $interval = $date1->diff($date2);
+  // $number_of_days = $interval->format('%a');
 
   echo "<h2 class='mb-4'>Leave Request ID: $request_id</h2>";
   echo "<div class='row mb-3'>";
@@ -348,8 +355,8 @@ if ($result->num_rows == 1) {
   echo "        <p><strong>Employee Name:</strong> $employee_name</p>";
   echo "        <p><strong>Start Date:</strong> $start_date</p>";
   echo "        <p><strong>End Date:</strong> $end_date</p>";
-  echo "        <p><strong>Number of Days:</strong> $number_of_days</p>"; // Display the number of days
   echo "        <p><strong>Status:</strong> $status</p>";
+  echo "        <p><strong>Number of Days:</strong> $days</p>"; // Display the number of days
   echo "    </div>";
   echo "    <div class='col-md-6'>";
   echo "    </div>";
@@ -373,6 +380,7 @@ if ($result->num_rows == 1) {
     echo "<p>Leave request not found.</p>";
 }
 ?>
+
 </div>
 
 

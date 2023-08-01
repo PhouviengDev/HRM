@@ -308,8 +308,8 @@
 
 
         <!-- Add your page content here -->
-      <!-- </section>
-    </div> -->
+      </section>
+    </div>
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->
