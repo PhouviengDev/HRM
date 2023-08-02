@@ -186,7 +186,7 @@ session_start();
           </div>
         </div>
 
-<?php
+        <?php
 // Connect to the database
 $servername = "localhost";
 $username = "root";
@@ -214,17 +214,6 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $employee_id = $row['id'];
 
-    // Calculate the number of days between the start_date and end_date
-    $start_date = new DateTime($_POST['start_date']);
-    $end_date = new DateTime($_POST['end_date']);
-    $interval = $start_date->diff($end_date);
-    $days = $interval->days + 1; // Add 1 day to include both start and end dates
-
-    // Insert the leave request
-    $stmt = $conn->prepare("INSERT INTO leave_requests (employee_id, day_type, start_date, end_date, days, created_at, status, reason, leave_type_id)
-                            VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, ?)");
-    $stmt->bind_param("ssssdsss", $employee_id, $day_type, $start_date, $end_date, $days, $status, $reason, $leaveType);
-
     // Set the values for the leave request
     $day_type = $_POST['day_type'];
     $start_date = $_POST['start_date'];
@@ -233,7 +222,23 @@ if ($result->num_rows > 0) {
     $reason = $_POST['reason'];
     $leaveType = $_POST["leave_type"];
 
-    // Execute the statement
+    // Calculate the number of days between the start_date and end_date
+    $start_date = new DateTime($start_date);
+    $end_date = new DateTime($end_date);
+    $interval = $start_date->diff($end_date);
+    $days = $interval->days + 1; // Add 1 day to include both start and end dates
+
+    // Reduce the number of days if day_type is half day (0.5)
+    if ($day_type == "half day" || $day_type == 0.5) {
+        $days -= 0.5;
+    }
+
+    // Insert the leave request
+    $stmt = $conn->prepare("INSERT INTO leave_requests (employee_id, day_type, start_date, end_date, days, created_at, status, reason, leave_type_id)
+                            VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, ?)");
+    $stmt->bind_param("ssssdsss", $employee_id, $day_type, $start_date->format('Y-m-d'), $end_date->format('Y-m-d'), $days, $status, $reason, $leaveType);
+
+    // Execute the insert query
     if ($stmt->execute()) {
         echo "Leave request submitted successfully.";
     } else {
@@ -247,6 +252,8 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 ?>
+
+
 
         <!-- Add your page content here -->
       </section>

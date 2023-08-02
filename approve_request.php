@@ -337,10 +337,10 @@ if ($result->num_rows == 1) {
   $days = $row["days"];
   $day_type = $row["day_type"]; // Assuming day_type field exists in the table
 
-  // Reduce the number of days by 0.5 if day_type is 0.5
-  if ($day_type == 0.5) {
-      $days -= 0.5;
-  }
+  // // Reduce the number of days by 0.5 if day_type is 0.5
+  // if ($day_type == 0.5) {
+  //     $days -= 0.5;
+  // }
 
   // // Calculate the number of days between start_date and end_date
   // $date1 = new DateTime($start_date);

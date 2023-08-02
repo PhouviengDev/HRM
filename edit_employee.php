@@ -52,7 +52,7 @@
             <!-- Menu Footer -->
             <li class="user-footer">
               <a href="#" class="btn btn-default btn-flat">Profile</a>
-              <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+              <a href="signout.php" class="btn btn-default btn-flat float-end">Sign out</a>
             </li>
             <!-- End Menu Footer -->
           </ul>

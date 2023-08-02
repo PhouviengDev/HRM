@@ -174,7 +174,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Dashboard</h1>
+                <h1 class="m-0">Leave</h1>
               </div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -208,8 +208,7 @@ if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
 
     // Retrieve leave requests for the current username
-    $sql = "SELECT lr.id, lr.employee_id, lr.start_date, lr.end_date, lr.created_at, lr.status, lr.reason, lr.day_type, e.name, lt.lt_name,
-    DATEDIFF(lr.end_date, lr.start_date) + 1 AS total_leave_duration_in_days
+    $sql = "SELECT lr.id, lr.employee_id, lr.start_date, lr.end_date, lr.created_at, lr.status, lr.reason, lr.day_type, e.name, lt.lt_name, lr.days
     FROM leave_requests lr
     INNER JOIN employees e ON lr.employee_id = e.id
     INNER JOIN leave_types lt ON lr.leave_type_id = lt.id
@@ -246,15 +245,14 @@ if (isset($_SESSION['username'])) {
             echo "<td>" . htmlspecialchars($row["status"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["lt_name"]) . "</td>";
             echo "<td>" . htmlspecialchars($row["reason"]) . "</td>";
+            echo "<td>" . htmlspecialchars($row["days"]) . "</td>";
 
-            $total_leave_duration = $row["total_leave_duration_in_days"];
+            // $total_leave_duration = $row["total_leave_duration_in_days"];
 
-            // Reduce the total leave duration by 0.5 if day_type is 0.5
-            if ($row["day_type"] == 0.5) {
-                $total_leave_duration -= 0.5;
-            }
-
-            echo "<td>" . number_format($total_leave_duration, 2) . "</td>";
+            // // Reduce the total leave duration by 0.5 if day_type is 0.5
+            // if ($row["day_type"] == 0.5) {
+            //     $total_leave_duration -= 0.5;
+            // }
             echo "</tr>";
         }
 
